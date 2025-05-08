@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Upload or Paste Python Code for Analysis</h1>
+
+    <form id="uploadForm">
+        <input type="file" name="file" id="fileInput" accept=".py" />
+        <button type="submit">Analyze File</button>
+    </form>
+
+    <div id="drop-area">Drag & Drop Python File Here</div>
+
+    <h3>Or paste your Python code below:</h3>
+    <form id="pasteForm">
+        <textarea id="codeInput" placeholder="Paste your Python code here..."></textarea>
+        <button type="submit">Analyze Pasted Code</button>
+    </form>
+
+    <div id="results"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,19 +1,28 @@
-from fastapi import FastAPI
-from app.models import CodeInput, SuggestionsOutput
-from app.analyzer import analyze_code
-from fastapi.middleware.cors import CORSMiddleware
+from analyzer.parser import parse_code
+from analyzer.rules.unused_vars import check_unused_vars
+from analyzer.rules.longMethod import longFunction
+from analyzer.rules.longCondition import checkLongIfElse
 
-app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
-)
+def analyze(code: str):
+    tree=parse_code(code)
+    if not tree:
+        return
+    suggestions=[]
 
-@app.post("/analyze", response_model=SuggestionsOutput)
-async def analyze(input: CodeInput):
-    suggestions = analyze_code(input.code)
-    return SuggestionsOutput(suggestions=suggestions)
+    suggestions+=check_unused_vars(tree) or []
+    suggestions+=longFunction(tree) or []
+    suggestions+=checkLongIfElse(tree) or []
+    return suggestions
+def analyze_code(filePath):
+    with open(filePath, 'r') as f:
+        code = f.read()
+    suggestions = analyze(code)
+    for s in suggestions:
+        print('[Suggestions]', s)
+
+if __name__=="__main__":
+    analyze('test_samples/sample1.py')
+    
+
+    
