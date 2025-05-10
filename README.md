@@ -23,6 +23,20 @@ RefactorGenie is a lightweight, web-based Python code analysis tool that detects
 
 ---
 
+
+### 🌐 Live Demo
+
+You can try out RefactorGenie right now:
+
+👉 **[https://refactorgenie.onrender.com](https://refactorgenie.onrender.com)**
+
+No installation needed — just upload or paste your Python code to receive instant refactoring suggestions.
+
+---
+
+
+
+
 ## 📁 Project Structure
 
 ```
